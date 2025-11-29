@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB SERVICE IMMOBILIER - Votre partenaire immobilier à Duékoué</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --light-gray: #F6F7FB;
+            --blue: #003366;
+            --gold: #FFCC00;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #003366 0%, #004080 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        .admin-body {
+            background-color: var(--light-gray);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0;
+            color: var(--blue);
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--blue);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 26px;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.2px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .btn:focus {
+            outline: 3px solid rgba(0, 51, 102, 0.18);
+            outline-offset: 2px;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--blue);
+            color: var(--blue);
+            background: transparent;
+            padding: 12px 26px;
+        }
+
+        .btn-outline:hover {
+            background: var(--blue);
+            color: var(--white);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 28px rgba(0, 51, 102, 0.22);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--white);
+            border: 2px solid rgba(0,0,0,0.06);
+            padding: 14px 28px;
+            box-shadow: 0 12px 30px rgba(0, 51, 102, 0.28);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(0, 51, 102, 0.34);
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: var(--white);
+            border: 2px solid #b02a37;
+            padding: 12px 20px;
+            box-shadow: 0 10px 26px rgba(220, 53, 69, 0.18);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 14px 34px rgba(200, 35, 51, 0.26);
+        }
+
+        .delete-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(220, 53, 69, 0.95);
+            border: none;
+            border-radius: 50%;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 8px 22px rgba(220,53,69,0.18);
+            font-size: 1.05rem;
+        }
+
+        .delete-btn:hover {
+            background: #b02a37;
+            transform: scale(1.12);
+            box-shadow: 0 14px 36px rgba(176,42,55,0.28);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 180px 0 100px;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Sections communes */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--blue);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: var(--gradient);
+            bottom: -15px;
+            left: 20%;
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 25px;
+        }
+
+        /* Properties Grid */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .property-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gradient);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .property-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .property-card:hover .property-image {
+            transform: scale(1.05);
+        }
+
+        .property-info {
+            padding: 25px;
+        }
+
+        .property-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .property-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            gap: 8px;
+        }
+
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .property-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Services */
+        .services {
+            background-color: var(--light-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: var(--blue);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--blue);
+            margin-bottom: 25px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--blue);
+            font-size: 1.4rem;
+        }
+
+        /* Admin Dashboard */
+        .admin-dashboard {
+            margin-top: 100px;
+            padding: 40px 0;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .admin-header h2 {
+            font-size: 2.5rem;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Admin Tabs */
+        .admin-tabs {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: var(--light-gray);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--blue);
+            background: var(--white);
+            border-bottom-color: var(--blue);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-header h3 {
+            margin-bottom: 0;
+            color: var(--blue);
+        }
+
+        .media-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Media Grid */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            background: var(--light-gray);
+        }
+
+        .media-item img,
+        .media-item video {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-placeholder {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            color: var(--text-light);
+        }
+
+        .media-actions-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .media-item:hover .media-actions-overlay {
+            opacity: 1;
+        }
+
+        .delete-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(220, 53, 69, 0.95);
+            border: none;
+            border-radius: 50%;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 8px 22px rgba(220,53,69,0.18);
+            font-size: 1.05rem;
+        }
+
+        .delete-btn:hover {
+            background: #b02a37;
+            transform: scale(1.12);
+            box-shadow: 0 14px 36px rgba(176,42,55,0.28);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-family: 'Open Sans', sans-serif;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            border-color: var(--blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* Property Items */
+        .properties-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .property-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .property-item:hover {
+            background: var(--white);
+            box-shadow: var(--box-shadow);
+        }
+
+        .property-item-info h4 {
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+
+        .property-item-details {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .property-type {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .property-type.vente {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .property-type.location {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .property-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .modal-header h3 {
+            margin-bottom: 0;
+            color: var(--blue);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--blue);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-toggle {
+            width: 82px;
+            height: 82px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(0, 51, 102, 0.35);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.12);
+            box-shadow: 0 20px 48px rgba(0, 51, 102, 0.42);
+        }
+
+        .chatbot-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--white);
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+            font-size: 1.2rem;
+        }
+
+        .chatbot-status {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 12px;
+            height: 12px;
+            background: #28a745;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 380px;
+            height: 500px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chatbot-info .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatbot-info h3 {
+            margin-bottom: 0;
+            font-size: 1.1rem;
+        }
+
+        .status-online {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chatbot-close:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            max-width: 85%;
+        }
+
+        .message-bot {
+            align-self: flex-start;
+        }
+
+        .message-user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+        }
+
+        .message-content {
+            background: var(--light-gray);
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+        }
+
+        .message-user .message-content {
+            background: var(--gradient);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-bot .message-content {
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-family: 'Open Sans', sans-serif;
+            transition: var(--transition);
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--blue);
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .chatbot-input button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Page specific */
+        .page-content {
+            margin-top: 100px;
+            padding: 40px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+                margin-top: 50px;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chatbot-window {
+                width: 320px;
+                height: 450px;
+                right: -10px;
+            }
+            
+            .tab-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .property-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .property-item-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .auth-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .chatbot-window {
+                width: 300px;
+                right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-img">DB</div>
+                <div class="logo-text">
+                    <h1>DB <span>SERVICE IMMOBILIER</span></h1>
+                    <p>Votre confiance, notre engagement</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#accueil" class="active">Accueil</a></li>
+                    <li><a href="#catalogue">Catalogue</a></li>
+                    <li><a href="#admin">Espace Pro</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#profil" class="btn btn-outline"><i class="fas fa-user"></i> Mon Compte</a>
+                <a href="#admin" class="btn btn-primary"><i class="fas fa-cog"></i> Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Accueil Section -->
+        <section id="accueil" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Trouvez la maison de vos rêves à Duékoué</h2>
+                    <p>DB SERVICE IMMOBILIER vous accompagne dans tous vos projets immobiliers avec expertise et professionnalisme.</p>
+                    <div class="hero-buttons">
+                        <a href="#catalogue" class="btn btn-primary">Découvrir nos biens</a>
+                        <a href="#contact" class="btn btn-outline">Estimation gratuite</a>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Biens vendus</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Années d'expérience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Clients satisfaits</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section class="featured">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Biens en Vedette</h2>
+                    <p>Découvrez notre sélection exclusive</p>
+                </div>
+                <div class="properties-grid">
+                    <!-- Property 1 -->
+                    <div class="property-card">
+                        <div class="property-badge">Vente</div>
+                        <div class="property-image">
+                            <i class="fas fa-home fa-3x"></i>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-price">25.000.000 FCFA</div>
+                            <h3 class="property-title">Villa moderne 4 pièces</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Duékoué Centre</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>4 chambres</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>3 salles de bain</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>180 m²</span>
+                                </div>
+                            </div>
+                            <a href="#catalogue" class="btn btn-primary">Voir les détails</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 2 -->
+                    <div class="property-card">
+                        <div class="property-badge">Location</div>
+                        <div class="property-image">
+                            <i class="fas fa-building fa-3x"></i>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-price">80.000 FCFA/mois</div>
+                            <h3 class="property-title">Appartement luxueux 3 pièces</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Zone Résidentielle</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>3 chambres</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>2 salles de bain</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-ruler-combined"></i>
+                                    <span>120 m²</span>
+                                </div>
+                            </div>
+                            <a href="#catalogue" class="btn btn-primary">Voir les détails</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Property 3 -->
+                    <div class="property-card">
+                        <div class="property-badge">Vente</div>
+                        <div class="property-image">
+                            <i class="fas fa-vector-square fa-3x"></i>
+                        </div>
+                        <div class="property-info">
+                            <div class="property-price">12.000.000 FCFA</div>
+                            <h3 class="property-title">Terrain constructible 500m²</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Périphérie de Duékoué</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-vector-square"></i>
+                                    <span>500 m²</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-tint"></i>
+                                    <span>Eau disponible</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Électricité</span>
+                                </div>
+                            </div>
+                            <a href="#catalogue" class="btn btn-primary">Voir les détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Nos Services</h2>
+                    <p>Une gamme complète de services immobiliers</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Achat & Vente</h3>
+                        <p>Accompagnement personnalisé pour l'achat ou la vente de votre bien immobilier.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Location</h3>
+                        <p>Gestion locative simplifiée pour bailleurs et locataires.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h3>Évaluation</h3>
+                        <p>Évaluation précise de votre bien selon le marché actuel.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Conseil</h3>
+                        <p>Conseils experts pour optimiser votre investissement immobilier.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalogue Section -->
+        <section id="catalogue" class="page-content">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Catalogue Complet</h2>
+                    <p>Explorez tous nos biens immobiliers disponibles</p>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option>Tous les types</option>
+                            <option>Vente</option>
+                            <option>Location</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Toutes les localisations</option>
+                            <option>Duékoué Centre</option>
+                            <option>Zone Résidentielle</option>
+                            <option>Périphérie</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Tous les prix</option>
+                            <option>Moins de 10M FCFA</option>
+                            <option>10M - 30M FCFA</option>
+                            <option>Plus de 30M FCFA</option>
+                        </select>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Rechercher un bien...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="properties-grid">
+                    <!-- Additional properties would be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="page-content admin-dashboard">
+            <div class="container">
+                <div class="admin-header">
+                    <h2>Tableau de Bord Administrateur</h2>
+                    <p>Gérez votre contenu et vos biens immobiliers</p>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">24</div>
+                            <div class="stat-label">Biens en ligne</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Photos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Vidéos</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">Clients</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Tabs -->
+                <div class="admin-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="properties">Gestion des Biens</button>
+                        <button class="tab-btn" data-tab="media">Médias</button>
+                        <button class="tab-btn" data-tab="users">Utilisateurs</button>
+                        <button class="tab-btn" data-tab="settings">Paramètres</button>
+                    </div>
+
+                    <!-- Properties Tab -->
+                    <div class="tab-content active" id="properties-tab">
+                        <div class="tab-header">
+                            <h3>Gestion des Biens Immobiliers</h3>
+                            <button class="btn btn-primary" id="addPropertyBtn">
+                                <i class="fas fa-plus"></i> Ajouter un Bien
+                            </button>
+                        </div>
+                        <div class="properties-list" id="propertiesList">
+                            <!-- Property items will be loaded here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Media Tab -->
+                    <div class="tab-content" id="media-tab">
+                        <div class="tab-header">
+                            <h3>Gestion des Médias</h3>
+                            <div class="media-actions">
+                                <button class="btn btn-primary" id="addImageBtn">
+                                    <i class="fas fa-image"></i> Ajouter Image
+                                </button>
+                                <button class="btn btn-primary" id="addVideoBtn">
+                                    <i class="fas fa-video"></i> Ajouter Vidéo
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Images Section -->
+                        <div class="media-section">
+                            <h4>Images</h4>
+                            <div class="media-grid" id="imagesGrid">
+                                <!-- Images will be loaded here by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Videos Section -->
+                        <div class="media-section">
+                            <h4>Vidéos</h4>
+                            <div class="media-grid" id="videosGrid">
+                                <!-- Videos will be loaded here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div class="tab-content" id="users-tab">
+                        <div class="tab-header">
+                            <h3>Gestion des Utilisateurs</h3>
+                        </div>
+                        <div class="users-list">
+                            <!-- Users will be loaded here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-content" id="settings-tab">
+                        <div class="tab-header">
+                            <h3>Paramètres du Site</h3>
+                        </div>
+                        <div class="settings-form">
+                            <form id="siteSettingsForm">
+                                <div class="form-group">
+                                    <label for="siteTitle">Titre du Site</label>
+                                    <input type="text" id="siteTitle" class="form-control" value="DB SERVICE IMMOBILIER">
+                                </div>
+                                <div class="form-group">
+                                    <label for="siteDescription">Description</label>
+                                    <textarea id="siteDescription" class="form-control">Votre partenaire immobilier à Duékoué</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmail">Email de Contact</label>
+                                    <input type="email" id="contactEmail" class="form-control" value="contact@db-service-immobilier.ci">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactPhone">Téléphone</label>
+                                    <input type="tel" id="contactPhone" class="form-control" value="(+225) 05 06 18 99 30">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="page-content">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Contactez-Nous</h2>
+                    <p>Nous sommes à votre écoute pour répondre à toutes vos questions</p>
+                </div>
+                
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Nos Coordonnées</h3>
+                        <div class="contact-details">
+                            <div class="contact-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Adresse</strong><br>
+                                    Duékoué, Côte d'Ivoire
+                                </div>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <strong>Téléphone</strong><br>
+                                    (+225) 05 06 18 99 30
+                                </div>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email</strong><br>
+                                    contact@db-service-immobilier.ci
+                                </div>
+                            </div>
+                            <div class="contact-detail">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Horaires d'ouverture</strong><br>
+                                    Lundi - Vendredi: 8h00 - 18h00<br>
+                                    Samedi: 9h00 - 13h00
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Envoyez-nous un message</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Nom complet</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Téléphone</label>
+                                <input type="tel" id="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Sujet</label>
+                                <input type="text" id="subject" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="logo">
+                        <div class="logo-img">DB</div>
+                        <div class="logo-text">
+                            <h3>DB SERVICE IMMOBILIER</h3>
+                        </div>
+                    </div>
+                    <p>Votre partenaire de confiance pour tous vos projets immobiliers à Duékoué et ses environs.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#catalogue">Catalogue</a></li>
+                        <li><a href="#admin">Espace Pro</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Achat & Vente</a></li>
+                        <li><a href="#">Location</a></li>
+                        <li><a href="#">Évaluation</a></li>
+                        <li><a href="#">Conseil</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Duékoué, Côte d'Ivoire</li>
+                        <li><i class="fas fa-phone"></i> (+225) 05 06 18 99 30</li>
+                        <li><i class="fas fa-envelope"></i> contact@db-service-immobilier.ci</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DB SERVICE IMMOBILIER. Tous droits réservés. | Version Professionnelle 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <div class="chatbot-avatar">
+                <i class="fas fa-headset"></i>
+            </div>
+            <div class="chatbot-status"></div>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-info">
+                    <div class="chatbot-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3>Sarah - Assistante IA</h3>
+                        <span class="status-online">En ligne</span>
+                    </div>
+                </div>
+                <button class="chatbot-close" id="chatbotClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message message-bot">
+                    <div class="message-avatar">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>Bonjour ! Je suis Sarah, l'assistante virtuelle de DB SERVICE IMMOBILIER. Comment puis-je vous aider aujourd'hui ?</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Tapez votre message...">
+                <button id="chatbotSend">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Property Modal -->
+    <div class="modal" id="addPropertyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter un Bien Immobilier</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addPropertyForm">
+                    <div class="form-group">
+                        <label for="propertyTitle">Titre du bien</label>
+                        <input type="text" id="propertyTitle" class="form-control" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="propertyType">Type</label>
+                            <select id="propertyType" class="form-control" required>
+                                <option value="vente">Vente</option>
+                                <option value="location">Location</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="propertyPrice">Prix (FCFA)</label>
+                            <input type="number" id="propertyPrice" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyLocation">Localisation</label>
+                        <input type="text" id="propertyLocation" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyDescription">Description</label>
+                        <textarea id="propertyDescription" class="form-control" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyImages">Images</label>
+                        <input type="file" id="propertyImages" class="form-control" multiple accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline modal-cancel">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Ajouter le bien</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Media Modal -->
+    <div class="modal" id="addMediaModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="mediaModalTitle">Ajouter un Média</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addMediaForm">
+                    <div class="form-group">
+                        <label for="mediaType">Type de média</label>
+                        <select id="mediaType" class="form-control">
+                            <option value="image">Image</option>
+                            <option value="video">Vidéo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mediaFile">Fichier</label>
+                        <input type="file" id="mediaFile" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mediaDescription">Description</label>
+                        <textarea id="mediaDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline modal-cancel">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Ajouter le média</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Main Application
+        class DBServiceImmobilier {
+            constructor() {
+                this.currentPage = 'accueil';
+                this.init();
+            }
+
+            init() {
+                this.initializeNavigation();
+                this.initializeAdminDashboard();
+                this.initializeChatbot();
+                this.initializeModals();
+                this.setupEventListeners();
+                this.loadSampleData();
+            }
+
+            initializeNavigation() {
+                // Smooth scrolling for anchor links and correct active link handling
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = anchor.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+
+                        // Update active nav link
+                        document.querySelectorAll('nav a').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        anchor.classList.add('active');
+
+                        if (targetElement) {
+                            // Smooth scroll taking fixed header into account
+                            const top = targetElement.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({
+                                top,
+                                behavior: 'smooth'
+                            });
+
+                            // Update hash without causing a hard jump
+                            history.replaceState(null, '', `#${targetId}`);
+
+                            // Show page content (for pages with .page-content)
+                            this.showPage(targetId);
+
+                            this.currentPage = targetId;
+                        }
+                    });
+                });
+
+                // Handle page navigation via hashchange (external changes)
+                window.addEventListener('hashchange', () => {
+                    const hash = window.location.hash.substring(1) || 'accueil';
+                    // Update active link
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${hash}`);
+                    });
+                    this.showPage(hash);
+                });
+
+                // Initial page load (show the section matching the hash)
+                const initialHash = window.location.hash.substring(1) || 'accueil';
+                // Set active nav link if present
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${initialHash}`);
+                });
+                this.showPage(initialHash);
+            }
+
+            showPage(pageId) {
+                // Hide all elements that are "page content"
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.style.display = 'none';
+                });
+
+                // Additionally handle special sections that may not have .page-content (ex: hero)
+                const specialSections = ['accueil', 'catalogue', 'admin', 'contact'];
+                specialSections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && !el.classList.contains('page-content')) {
+                        // default display for non .page-content sections is as originally defined in HTML/CSS
+                        el.style.display = (id === pageId) ? '' : (id === 'accueil' ? '' : 'none');
+                    }
+                });
+
+                // Show selected page if it exists
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    // If it was hidden via style, remove that to let CSS handle layout (block by default for sections)
+                    targetPage.style.display = '';
+                }
+
+                this.currentPage = pageId;
+            }
+
+            initializeAdminDashboard() {
+                const tabButtons = document.querySelectorAll('.tab-btn');
+                const tabContents = document.querySelectorAll('.tab-content');
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tabId = button.getAttribute('data-tab');
+
+                        // Remove active class from all buttons and contents
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+
+                        // Add active class to current button and content
+                        button.classList.add('active');
+                        const contentEl = document.getElementById(`${tabId}-tab`);
+                        if (contentEl) contentEl.classList.add('active');
+                    });
+                });
+            }
+
+            initializeChatbot() {
+                this.chatbotToggle = document.getElementById('chatbotToggle');
+                this.chatbotWindow = document.getElementById('chatbotWindow');
+                this.chatbotClose = document.getElementById('chatbotClose');
+                this.chatbotMessages = document.getElementById('chatbotMessages');
+                this.chatbotInput = document.getElementById('chatbotInput');
+                this.chatbotSend = document.getElementById('chatbotSend');
+
+                this.isChatbotOpen = false;
+
+                this.chatbotToggle.addEventListener('click', () => this.toggleChatbot());
+                this.chatbotClose.addEventListener('click', () => this.closeChatbot());
+                this.chatbotSend.addEventListener('click', () => this.sendChatMessage());
+                this.chatbotInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.sendChatMessage();
+                    }
+                });
+
+                // Close chatbot when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (this.isChatbotOpen &&
+                        !this.chatbotWindow.contains(e.target) &&
+                        !this.chatbotToggle.contains(e.target)) {
+                        this.closeChatbot();
+                    }
+                });
+            }
+
+            toggleChatbot() {
+                if (this.isChatbotOpen) {
+                    this.closeChatbot();
+                } else {
+                    this.openChatbot();
+                }
+            }
+
+            openChatbot() {
+                this.chatbotWindow.classList.add('active');
+                this.isChatbotOpen = true;
+                this.chatbotInput.focus();
+                this.scrollChatToBottom();
+                this.loadChatHistory();
+            }
+
+            closeChatbot() {
+                this.chatbotWindow.classList.remove('active');
+                this.isChatbotOpen = false;
+            }
+
+            sendChatMessage() {
+                const message = this.chatbotInput.value.trim();
+                if (message === '') return;
+
+                this.addChatMessage(message, 'user');
+                this.chatbotInput.value = '';
+
+                // Simulate typing delay
+                setTimeout(() => {
+                    const response = this.generateChatResponse(message);
+                    this.addChatMessage(response, 'bot');
+                }, 800 + Math.random() * 900);
+            }
+
+            addChatMessage(content, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message message-${sender}`;
+
+                const time = new Date().toLocaleTimeString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                if (sender === 'bot') {
+                    messageElement.innerHTML = `
+                        <div class="message-avatar">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>${content}</p>
+                            <span class="message-time">${time}</span>
+                        </div>
+                    `;
+                } else {
+                    messageElement.innerHTML = `
+                        <div class="message-content">
+                            <p>${content}</p>
+                            <span class="message-time">${time}</span>
+                        </div>
+                        <div class="message-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    `;
+                }
+
+                this.chatbotMessages.appendChild(messageElement);
+                this.scrollChatToBottom();
+                this.saveChatHistory();
+            }
+
+            generateChatResponse(message) {
+                const lowerMessage = message.toLowerCase();
+
+                // Responses based on keywords
+                if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || lowerMessage.includes('hello')) {
+                    return "Bonjour ! Je suis Sarah, l'assistante virtuelle de DB SERVICE IMMOBILIER. Comment puis-je vous aider aujourd'hui ?";
+                } else if (lowerMessage.includes('prix') || lowerMessage.includes('coût') || lowerMessage.includes('tarif')) {
+                    return "Les prix varient selon le type de bien et sa localisation. Nos biens vont de 5.000.000 FCFA à 50.000.000 FCFA pour la vente, et de 30.000 FCFA à 200.000 FCFA par mois pour la location.";
+                } else if (lowerMessage.includes('location') || lowerMessage.includes('louer')) {
+                    return "Nous avons plusieurs biens disponibles à la location. Souhaitez-vous un appartement, une maison ou un local commercial ?";
+                } else if (lowerMessage.includes('vente') || lowerMessage.includes('acheter')) {
+                    return "Nous proposons une sélection de biens en vente : villas, appartements, terrains, et maisons. Quel est votre budget approximatif ?";
+                } else if (lowerMessage.includes('contact') || lowerMessage.includes('téléphone') || lowerMessage.includes('email')) {
+                    return "Vous pouvez nous contacter au (+225) 05 06 18 99 30, par email à contact@db-service-immobilier.ci, ou visiter notre agence à Duékoué.";
+                } else if (lowerMessage.includes('adresse') || lowerMessage.includes('localisation') || lowerMessage.includes('où')) {
+                    return "Notre agence est située à Duékoué, en Côte d'Ivoire. Nous couvrons également les zones environnantes.";
+                } else if (lowerMessage.includes('heure') || lowerMessage.includes('ouvert') || lowerMessage.includes('fermé')) {
+                    return "Nous sommes ouverts du lundi au vendredi de 8h00 à 18h00, et le samedi de 9h00 à 13h00. Fermé le dimanche.";
+                } else if (lowerMessage.includes('service') || lowerMessage.includes('prestation')) {
+                    return "Nous proposons : achat/vente, location, évaluation immobilière, conseil en investissement, et gestion de patrimoine.";
+                } else if (lowerMessage.includes('maison') || lowerMessage.includes('villa') || lowerMessage.includes('appartement')) {
+                    return "Nous avons plusieurs types de biens disponibles. Voulez-vous plutôt une maison, un appartement, ou un terrain ?";
+                } else if (lowerMessage.includes('terrain')) {
+                    return "Nous avons des terrains constructibles disponibles dans différentes zones de Duékoué. Superficies de 200m² à 2000m².";
+                } else if (lowerMessage.includes('visite') || lowerMessage.includes('voir')) {
+                    return "Je peux vous organiser une visite. Souhaitez-vous visiter un bien en particulier ou préférez-vous que je vous propose des options ?";
+                } else if (lowerMessage.includes('merci') || lowerMessage.includes('remercie')) {
+                    return "Je vous en prie ! N'hésitez pas si vous avez d'autres questions. Je suis là pour vous aider.";
+                } else if (lowerMessage.includes('au revoir') || lowerMessage.includes('bye')) {
+                    return "Au revoir ! N'hésitez pas à revenir si vous avez d'autres questions. Bonne journée !";
+                } else {
+                    return "Je comprends votre question. Pour des informations plus précises, je vous recommande de contacter directement notre équipe au (+225) 05 06 18 99 30 ou de consulter notre catalogue en ligne.";
+                }
+            }
+
+            scrollChatToBottom() {
+                this.chatbotMessages.scrollTop = this.chatbotMessages.scrollHeight;
+            }
+
+            saveChatHistory() {
+                try {
+                    const messages = this.chatbotMessages.innerHTML;
+                    localStorage.setItem('chatbotHistory', messages);
+                } catch (err) {
+                    console.warn('Impossible de sauvegarder l\'historique du chat:', err);
+                }
+            }
+
+            loadChatHistory() {
+                try {
+                    const history = localStorage.getItem('chatbotHistory');
+                    if (history) {
+                        this.chatbotMessages.innerHTML = history;
+                        this.scrollChatToBottom();
+                    }
+                } catch (err) {
+                    console.warn('Impossible de charger l\'historique du chat:', err);
+                }
+            }
+
+            initializeModals() {
+                const modals = document.querySelectorAll('.modal');
+                const closeButtons = document.querySelectorAll('.modal-close, .modal-cancel');
+
+                // Add Property Modal
+                const addPropertyBtn = document.getElementById('addPropertyBtn');
+                if (addPropertyBtn) {
+                    addPropertyBtn.addEventListener('click', () => {
+                        this.openModal('addPropertyModal');
+                    });
+                }
+
+                // Add Media Modals
+                const addImageBtn = document.getElementById('addImageBtn');
+                if (addImageBtn) {
+                    addImageBtn.addEventListener('click', () => {
+                        const titleEl = document.getElementById('mediaModalTitle');
+                        const mediaTypeEl = document.getElementById('mediaType');
+                        if (titleEl) titleEl.textContent = 'Ajouter une Image';
+                        if (mediaTypeEl) mediaTypeEl.value = 'image';
+                        this.openModal('addMediaModal');
+                    });
+                }
+
+                const addVideoBtn = document.getElementById('addVideoBtn');
+                if (addVideoBtn) {
+                    addVideoBtn.addEventListener('click', () => {
+                        const titleEl = document.getElementById('mediaModalTitle');
+                        const mediaTypeEl = document.getElementById('mediaType');
+                        if (titleEl) titleEl.textContent = 'Ajouter une Vidéo';
+                        if (mediaTypeEl) mediaTypeEl.value = 'video';
+                        this.openModal('addMediaModal');
+                    });
+                }
+
+                // Close modals
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.closeAllModals();
+                    });
+                });
+
+                // Close modal when clicking outside
+                modals.forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            this.closeAllModals();
+                        }
+                    });
+                });
+
+                // Form submissions
+                const addPropertyForm = document.getElementById('addPropertyForm');
+                if (addPropertyForm) {
+                    addPropertyForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.addProperty();
+                    });
+                }
+
+                const addMediaForm = document.getElementById('addMediaForm');
+                if (addMediaForm) {
+                    addMediaForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.addMedia();
+                    });
+                }
+
+                const siteSettingsForm = document.getElementById('siteSettingsForm');
+                if (siteSettingsForm) {
+                    siteSettingsForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.saveSettings();
+                    });
+                }
+
+                const contactForm = document.getElementById('contactForm');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.sendContactMessage();
+                    });
+                }
+            }
+
+            openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) modal.classList.add('active');
+            }
+
+            closeAllModals() {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+
+            setupEventListeners() {
+                // Logout functionality (if present)
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                            window.location.href = '#accueil';
+                        }
+                    });
+                }
+            }
+
+            loadSampleData() {
+                this.loadProperties();
+                this.loadMedia();
+                this.loadChatHistory();
+            }
+
+            loadProperties() {
+                const propertiesList = document.getElementById('propertiesList');
+                if (!propertiesList) return;
+
+                // Simulated data
+                const properties = [
+                    {
+                        id: 1,
+                        title: "Villa moderne 4 pièces",
+                        type: "vente",
+                        price: "25.000.000 FCFA",
+                        location: "Duékoué Centre",
+                        status: "active"
+                    },
+                    {
+                        id: 2,
+                        title: "Appartement luxueux 3 pièces",
+                        type: "location",
+                        price: "80.000 FCFA/mois",
+                        location: "Zone Résidentielle",
+                        status: "active"
+                    },
+                    {
+                        id: 3,
+                        title: "Terrain constructible 500m²",
+                        type: "vente",
+                        price: "12.000.000 FCFA",
+                        location: "Périphérie de Duékoué",
+                        status: "active"
+                    }
+                ];
+
+                propertiesList.innerHTML = properties.map(property => `
+                    <div class="property-item" data-id="${property.id}">
+                        <div class="property-item-info">
+                            <h4>${property.title}</h4>
+                            <div class="property-item-details">
+                                <span class="property-type ${property.type}">${property.type === 'vente' ? 'Vente' : 'Location'}</span>
+                                <span class="property-price">${property.price}</span>
+                                <span class="property-location">${property.location}</span>
+                            </div>
+                        </div>
+                        <div class="property-item-actions">
+                            <button class="btn btn-outline edit-property" data-id="${property.id}">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button class="btn btn-danger delete-property" data-id="${property.id}">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners for delete buttons (use button reference)
+                document.querySelectorAll('.delete-property').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const propertyId = button.getAttribute('data-id');
+                        this.deleteProperty(propertyId);
+                    });
+                });
+
+                // Add event listeners for edit buttons (if needed later)
+                document.querySelectorAll('.edit-property').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const propertyId = button.getAttribute('data-id');
+                        // TODO: ouvrir modal d'édition et pré-remplir les champs
+                        alert(`Édition du bien #${propertyId} (fonctionnalité à implémenter).`);
+                    });
+                });
+            }
+
+            loadMedia() {
+                const imagesGrid = document.getElementById('imagesGrid');
+                const videosGrid = document.getElementById('videosGrid');
+
+                if (!imagesGrid || !videosGrid) return;
+
+                // Simulated data
+
+                const images = [
+                    { id: 1, name: 'villa1.jpg', description: 'Villa moderne façade' },
+                    { id: 2, name: 'villa2.jpg', description: 'Salon spacieux' },
+                    { id: 3, name: 'villa3.jpg', description: 'Cuisine équipée' }
+                ];
+
+                const videos = [
+                    { id: 1, name: 'visite-villa.mp4', description: 'Visite virtuelle villa' },
+                    { id: 2, name: 'presentation-agence.mp4', description: 'Présentation agence' }
+                ];
+
+                imagesGrid.innerHTML = images.map(image => `
+                    <div class="media-item" data-id="${image.id}">
+                        <div class="media-placeholder">
+                            <i class="fas fa-image fa-2x"></i>
+                        </div>
+                        <div class="media-actions-overlay">
+                            <button class="delete-btn delete-media" data-id="${image.id}" data-type="image">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="media-info">
+                            <p>${image.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                videosGrid.innerHTML = videos.map(video => `
+                    <div class="media-item" data-id="${video.id}">
+                        <div class="media-placeholder">
+                            <i class="fas fa-video fa-2x"></i>
+                        </div>
+                        <div class="media-actions-overlay">
+                            <button class="delete-btn delete-media" data-id="${video.id}" data-type="video">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="media-info">
+                            <p>${video.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Add event listeners for delete buttons (use button reference)
+                document.querySelectorAll('.delete-media').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const mediaId = button.getAttribute('data-id');
+                        const mediaType = button.getAttribute('data-type');
+                        this.deleteMedia(mediaId, mediaType);
+                    });
+                });
+            }
+
+            addProperty() {
+                const form = document.getElementById('addPropertyForm');
+                if (!form) return;
+                const formData = new FormData(form);
+
+                // Simulate API call
+                console.log('Adding property:', Object.fromEntries(formData));
+
+                // Show success message
+                alert('Bien immobilier ajouté avec succès !');
+
+                // Close modal and reset form
+                this.closeAllModals();
+                form.reset();
+
+                // Reload properties list
+                this.loadProperties();
+            }
+
+            addMedia() {
+                const form = document.getElementById('addMediaForm');
+                if (!form) return;
+                const formData = new FormData(form);
+
+                // Simulate API call
+                console.log('Adding media:', Object.fromEntries(formData));
+
+                // Show success message
+                alert('Média ajouté avec succès !');
+
+                // Close modal and reset form
+                this.closeAllModals();
+                form.reset();
+
+                // Reload media list
+                this.loadMedia();
+            }
+
+            deleteProperty(propertyId) {
+                if (confirm('Êtes-vous sûr de vouloir supprimer ce bien ? Cette action est irréversible.')) {
+                    // Simulate API call
+                    console.log('Deleting property:', propertyId);
+
+                    // Show success message
+                    alert('Bien immobilier supprimé avec succès !');
+
+                    // Reload properties list
+                    this.loadProperties();
+                }
+            }
+
+            deleteMedia(mediaId, mediaType) {
+                if (confirm('Êtes-vous sûr de vouloir supprimer ce média ? Cette action est irréversible.')) {
+                    // Simulate API call
+                    console.log('Deleting media:', mediaId, mediaType);
+
+                    // Show success message
+                    alert('Média supprimé avec succès !');
+
+                    // Reload media list
+                    this.loadMedia();
+                }
+            }
+
+            saveSettings() {
+                const form = document.getElementById('siteSettingsForm');
+                if (!form) return;
+                const formData = new FormData(form);
+
+                // Simulate API call
+                console.log('Saving settings:', Object.fromEntries(formData));
+
+                // Show success message
+                alert('Paramètres enregistrés avec succès !');
+            }
+
+            sendContactMessage() {
+                const form = document.getElementById('contactForm');
+                if (!form) return;
+                const formData = new FormData(form);
+
+                // Simulate API call
+                console.log('Sending contact message:', Object.fromEntries(formData));
+
+                // Show success message
+                alert('Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.');
+
+                // Reset form
+                form.reset();
+            }
+        }
+
+        // Initialize application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.dbServiceApp = new DBServiceImmobilier();
+        });
+    </script>
+</body>
+</html>
